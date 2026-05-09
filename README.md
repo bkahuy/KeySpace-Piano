@@ -59,10 +59,10 @@
 - Áp dụng mã giảm giá
 - Sử dụng điểm thưởng
 - Nhiều phương thức thanh toán:
-  - COD (Tiền mặt)
-  - Chuyển khoản ngân hàng
-  - VNPay
-  - Momo
+    - COD (Tiền mặt)
+    - Chuyển khoản ngân hàng
+    - VNPay
+    - Momo
 
 #### Quản lý đơn hàng
 - Xem lịch sử đơn hàng
@@ -97,11 +97,11 @@
 #### Quản lý đơn hàng
 - Xem danh sách đơn hàng
 - Cập nhật trạng thái:
-  - Pending (Chờ xử lý)
-  - Processing (Đang xử lý)
-  - Shipping (Đang giao)
-  - Delivered (Đã giao)
-  - Cancelled (Đã hủy)
+    - Pending (Chờ xử lý)
+    - Processing (Đang xử lý)
+    - Shipping (Đang giao)
+    - Delivered (Đã giao)
+    - Cancelled (Đã hủy)
 - Chi tiết đơn hàng
 
 #### Quản lý danh mục
@@ -125,10 +125,10 @@
 - CRUD chương trình khuyến mãi
 - Tạo mã giảm giá cho khách hàng
 - Thiết lập:
-  - Loại giảm giá (%, số tiền cố định)
-  - Giá trị đơn hàng tối thiểu
-  - Giảm tối đa
-  - Thời gian áp dụng
+    - Loại giảm giá (%, số tiền cố định)
+    - Giá trị đơn hàng tối thiểu
+    - Giảm tối đa
+    - Thời gian áp dụng
 
 ## 🛠️ Công nghệ sử dụng
 
@@ -161,16 +161,16 @@
 - Node.js >= 18.x
 - MySQL >= 8.0
 - Extensions:
-  - BCMath PHP Extension
-  - Ctype PHP Extension
-  - Fileinfo PHP Extension
-  - JSON PHP Extension
-  - Mbstring PHP Extension
-  - OpenSSL PHP Extension
-  - PDO PHP Extension
-  - Tokenizer PHP Extension
-  - XML PHP Extension
-  - GD PHP Extension
+    - BCMath PHP Extension
+    - Ctype PHP Extension
+    - Fileinfo PHP Extension
+    - JSON PHP Extension
+    - Mbstring PHP Extension
+    - OpenSSL PHP Extension
+    - PDO PHP Extension
+    - Tokenizer PHP Extension
+    - XML PHP Extension
+    - GD PHP Extension
 
 ## 📥 Cài đặt
 
@@ -264,7 +264,7 @@ php artisan serve
 
 ```
 
-Mở trình duyệt và truy cập: `http://localhost:8000`
+Mở trình duyệt và truy cập: `http://localhost:8000` hoặc `http://127.0.0.1:8000`
 
 ## 📁 Cấu trúc dự án
 
@@ -328,12 +328,12 @@ keyspace/
 Sau khi chạy seeder, bạn có thể đăng nhập với các tài khoản sau:
 
 ### Admin
-- **Email:** admin@pianostore.vn
-- **Password:** 123456
+- **Email:** admin@gmail.vn
+- **Password:** 1
 
 ### Customer
-- **Email:** customer@gmail.com
-- **Password:** 123456
+- **Email:** khachhang@gmail.com
+- **Password:** 1
 
 ## 🗄️ Database Schema
 
@@ -358,19 +358,7 @@ Hệ thống sử dụng 10 bảng chính:
 - **user_coupons** - Mã giảm giá của người dùng
 
 ### Relationships
-- User `1 ----< *` Order
-- User `1 ----< *` Review
-- User `1 ----< *` UserCoupon
-- Product `* >---- 1` Category
-- Product `* >---- 1` Brand
-- Product `1 ----< *` ProductImage
-- Product `1 ----< *` Review
-- Product `1 ----< *` OrderItem
-- Order `1 ----< *` OrderItem
-- Order `* >---- 0..1` UserCoupon
-- Promotion `1 ----< *` UserCoupon
-
-Xem chi tiết: [Class Diagram (PlantUML)](docs/class-diagram.puml)
+![erd](storage/app/private/demo/ERD.png)
 
 ## 🛣️ API Routes
 
@@ -446,16 +434,16 @@ DELETE /admin/reviews/{id}      # Xóa đánh giá
 ## 📸 Screenshots
 
 ### Trang chủ
-![Home Page](docs/screenshots/home.png)
+![Home Page](storage/app/private/demo/home.png)
 
 ### Chi tiết sản phẩm
-![Product Detail](docs/screenshots/product-detail.png)
+![Product Detail](storage/app/private/demo/product_detail.png)
 
 ### Giỏ hàng
-![Cart](docs/screenshots/cart.png)
+![Cart](storage/app/private/demo/cart.png)
 
 ### Admin Dashboard
-![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+![Admin Dashboard](storage/app/private/demo/admin.png)
 
 ## 🤝 Đóng góp
 
@@ -472,13 +460,10 @@ Mọi đóng góp đều được chào đón! Hãy tạo issue hoặc pull requ
 ## 👨‍💻 Tác giả
 
 **Bùi Khắc Huy**
-- Email: huybk.ph38783@fpt.edu.vn
+- Email: buikhachuy003@gmail
 - Phone: 083 760 7568
 - Zalo: [083 760 7568](https://zalo.me/84837607568)
 
-## 📝 License
-
-Dự án này được phân phối dưới giấy phép [MIT License](LICENSE).
 
 ## 🙏 Lời cảm ơn
 
