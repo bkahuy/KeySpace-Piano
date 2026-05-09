@@ -126,4 +126,28 @@
             </div>
         @endif
     </div>
+
+    {{-- Toast Notification ở góc dưới bên phải (đồng bộ với layout) --}}
+    @if(session('error'))
+        <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
+            <div id="errorToast" class="toast align-items-center text-bg-danger border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                <div class="d-flex">
+                    <div class="toast-body fs-6">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i> {{ session('error') }}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Đóng"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var toastElement = document.getElementById('errorToast');
+                if (toastElement) {
+                    var toast = new bootstrap.Toast(toastElement);
+                    toast.show();
+                }
+            });
+        </script>
+    @endif
 @endsection

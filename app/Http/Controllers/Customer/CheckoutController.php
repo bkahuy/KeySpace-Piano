@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPlaced;
 use App\Models\UserCoupon;
+use App\Models\Product;
 
 
 class CheckoutController extends Controller
@@ -24,6 +25,29 @@ class CheckoutController extends Controller
         // Nếu giỏ hàng trống thì đuổi về trang chủ
         if (empty($cart)) {
             return redirect()->route('home')->with('error', 'Giỏ hàng của bạn đang trống!');
+        }
+
+        // ================= BẮT ĐẦU KIỂM TRA TỒN KHO =================
+        // Duyệt qua từng sản phẩm trong giỏ hàng
+        foreach ($cart as $productId => $item) {
+            $product = Product::find($productId);
+
+            // Trường hợp 1: Sản phẩm đã bị Admin xóa khỏi hệ thống
+            if (!$product) {
+                // Tùy chọn: Bạn có thể tự động unset($cart[$productId]) ở đây nếu muốn
+                return redirect()->route('cart.index')->with('error', 'Một số sản phẩm trong giỏ hàng không còn tồn tại. Vui lòng kiểm tra lại!');
+            }
+
+            // Trường hợp 2: Số lượng khách muốn mua LỚN HƠN số lượng còn lại trong kho
+            // (Bao gồm cả việc tồn kho = 0)
+            if ($item['quantity'] > $product->stock_quantity && $product->stock_quantity > 0) {
+                return redirect()->route('cart.index')->with('error', 'Sản phẩm "' . $product->name . '" hiện chỉ còn ' . $product->stock_quantity . ' chiếc trong kho. Vui lòng giảm số lượng!');
+            }
+
+            if ($item['quantity'] > $product->stock_quantity && $product->stock_quantity == 0) {
+                return redirect()->route('cart.index')->with('error', 'Sản phẩm "' . $product->name . '" hiện đang tạm thời hết hàng. Vui lòng lựa chọn sản phẩm khác!');
+            }
+
         }
 
         $availableCoupons = collect();

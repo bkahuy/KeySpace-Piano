@@ -89,7 +89,7 @@ class AuthController extends Controller
                 'regex:/^(0|\+84)(3|5|7|8|9)[0-9]{8}$/',
                 'unique:users,phone',
             ],
-            'password' => 'required|string|min:6', // Phải có trường password_confirmation ở form
+            'password' => 'required|string|min:6',
             'password_confirmation' => 'required|string|min:6|same:password',
         ], [
             'name.required' => 'Vui lòng nhập họ và tên.',
