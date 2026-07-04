@@ -38,6 +38,9 @@ class OrderTrackingController extends Controller
             return back()->with('error', 'Email không khớp với thông tin đặt hàng!')->withInput();
         }
 
+        // Thông báo thành công ngay sau khi xác thực email
+        session()->flash('success', 'Tìm kiếm đơn hàng thành công');
+
         // ================= XỬ LÝ STATUS TẠI CONTROLLER =================
         $statusText = '';
         $statusBadge = '';

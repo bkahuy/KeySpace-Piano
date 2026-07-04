@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Admin\PromotionController;
 
 
 class AuthController extends Controller
@@ -116,6 +117,8 @@ class AuthController extends Controller
 
         // Tự động đăng nhập luôn sau khi đăng ký thành công
         Auth::login($user);
+        // Sau khi tạo user mới
+        PromotionController::assignPromotionCouponsToNewUser($user);
 
         // Chuyển hướng về trang chủ kèm thông báo
         return redirect()->route('home')->with('success', 'Chào mừng bạn đến với KeySpace Piano!');

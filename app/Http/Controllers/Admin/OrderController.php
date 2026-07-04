@@ -83,7 +83,7 @@ class OrderController extends Controller
             // Cập nhật trạng thái giao hàng
             $order->status = $newStatus;
 
-            // LOGIC KẾT TOÁN: Tự động chốt thanh toán khi giao hàng thành công
+            // Tự động chốt thanh toán khi giao hàng thành công
             if ($newStatus === 'delivered') {
                 $order->payment_status = 'paid';
 
@@ -132,7 +132,7 @@ class OrderController extends Controller
 
             $order->save();
 
-            // LOGIC "ĂN ĐIỂM": Xử lý Số lượng Tồn kho (Stock Quantity)
+            // LOGIC: Xử lý Số lượng Tồn kho (Stock Quantity)
 
             // Trường hợp 1: Nếu đơn đang bình thường mà bị HỦY -> Phải cộng trả lại kho
             if ($newStatus === 'cancelled' && $oldStatus !== 'cancelled') {

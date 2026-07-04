@@ -249,7 +249,6 @@
 @if(session('success'))
     {{-- Vị trí fixed ở góc dưới bên phải màn hình (bottom-0 end-0) --}}
     <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
-        {{-- Thuộc tính data-bs-delay="5000" quyết định thời gian sống là 5 giây --}}
         <div id="successToast" class="toast align-items-center text-bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
             <div class="d-flex">
                 <div class="toast-body fs-6">
@@ -271,6 +270,30 @@
         });
     </script>
 @endif
+
+@if(session('error'))
+    <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 1055;">
+        <div id="errorToast" class="toast align-items-center text-bg-danger border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="d-flex">
+                <div class="toast-body fs-6">
+                    <i class="fa-solid fa-circle-exclamation me-2"></i> {{ session('error') }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Đóng"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toastElement = document.getElementById('errorToast');
+            if (toastElement) {
+                var toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            }
+        });
+    </script>
+@endif
+
 @stack('scripts')
 {{-- ================= CONTACT BUTTONS ================= --}}
 <div class="floating-contact">

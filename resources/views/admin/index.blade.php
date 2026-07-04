@@ -112,10 +112,17 @@
                                         $order->status == 'pending' ? 'warning text-dark' :
                                         ($order->status == 'processing' ? 'info text-dark' :
                                         ($order->status == 'shipping' ? 'primary' :
-                                        ($order->status == 'completed' ? 'success' :
-                                        ($order->status == 'canceled' ? 'danger' : 'primary'))))
+                                        ($order->status == 'delivered' ? 'success' :
+                                        ($order->status == 'cancelled' ? 'danger' : 'primary'))))
                                     }}">
-                                        {{ strtoupper($order->status) }}
+                                        {{ match($order->status) {
+                                            'pending' => 'Chờ xử lý',
+                                            'processing' => 'Đang xử lý',
+                                            'shipping' => 'Đang giao hàng',
+                                            'delivered' => 'Đã giao hàng',
+                                            'cancelled' => 'Đã hủy',
+                                            default => strtoupper($order->status)
+                                        } }}
                                     </span>
                                     </td>
                                     <td class="text-end text-muted pe-3">{{ $order->created_at->diffForHumans() }}</td>

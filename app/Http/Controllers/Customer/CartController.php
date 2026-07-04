@@ -74,9 +74,9 @@ class CartController extends Controller
 
         // Lấy giỏ hàng hiện tại
         $cart = session()->get('cart');
-
+        $product = Product::find($id);
         // Kiểm tra xem sản phẩm có trong giỏ không và số lượng phải lớn hơn 0
-        if(isset($cart[$id]) && $quantity > 0) {
+        if(isset($cart[$id]) && $quantity > 0 && $quantity <= $product->stock_quantity) {
 
             // Cập nhật lại số lượng mới
             $cart[$id]['quantity'] = $quantity;
@@ -87,7 +87,7 @@ class CartController extends Controller
             return redirect()->back()->with('success', 'Đã cập nhật số lượng thành công!');
         }
 
-        return redirect()->back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại.');
+        return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật số lượng.');
     }
 
     // 4. Hàm Xóa sản phẩm khỏi giỏ

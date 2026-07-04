@@ -67,10 +67,12 @@
                                         </td>
                                         <td>
                                             @if($order->status == 'pending')
-                                                <span class="badge bg-warning text-dark">Chờ xử lý</span>
+                                                <span class="badge bg-warning text-dark">Chờ duyệt đơn</span>
                                             @elseif($order->status == 'processing')
-                                                <span class="badge bg-info text-dark">Đang giao</span>
-                                            @elseif($order->status == 'completed')
+                                                <span class="badge bg-info text-dark">Chờ xử lý</span>
+                                            @elseif($order->status == 'shipping')
+                                                <span class="badge bg-info text-dark">Đang giao hàng</span>
+                                            @elseif($order->status == 'delivered')
                                                 <span class="badge bg-success">Hoàn thành</span>
                                             @else
                                                 <span class="badge bg-danger">Đã hủy</span>

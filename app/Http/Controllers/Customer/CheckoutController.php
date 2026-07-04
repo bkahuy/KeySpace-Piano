@@ -134,7 +134,7 @@ class CheckoutController extends Controller
 
             $usedPoints = min((int) $request->used_reward_points, $user->reward_points);
 
-            // Gợi ý: 1 điểm = 1.000đ, tối đa giảm 30% tạm tính
+            // 1 điểm = 1.000đ, tối đa giảm 30% tạm tính
             $pointValue = 10000;
             $maxPointsDiscount = floor($subtotalAmount * 0.3);
 
@@ -178,6 +178,8 @@ class CheckoutController extends Controller
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $productId,
+                    'product_name' => $item['name'],
+                    'path_img' => $item['image'],
                     'unit_price' => $item['price'],
                     'quantity' => $item['quantity'],
                 ]);

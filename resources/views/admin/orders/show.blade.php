@@ -97,13 +97,13 @@
                                     <td>
                                         {{-- Lấy ảnh chính của sản phẩm --}}
                                         @php
-                                            $primaryImage = $item->product->images->where('is_primary', true)->first();
-                                            $imagePath = $primaryImage ? asset($primaryImage->image_path) : asset('frontend/images/no-image.jpg');
+                                            $primaryImage = $item->path_img;
+                                            $imagePath = $primaryImage ? asset($item->path_img) : asset('frontend/images/no-image.jpg');
                                         @endphp
-                                        <img src="{{ $imagePath }}" alt="{{ $item->product->name }}" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ $imagePath }}" alt="{{ $item->product_name }}" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
                                     </td>
                                     <td>
-                                        <div class="fw-bold">{{ $item->product->name }}</div>
+                                        <div class="fw-bold">{{ $item->product_name }}</div>
                                         <small class="text-muted">SKU: {{ $item->product->sku }}</small>
                                     </td>
                                     <td class="text-center">{{ number_format($item->unit_price, 0, ',', '.') }}đ</td>

@@ -91,9 +91,6 @@ class ProductController extends Controller
             // Nếu có bất kỳ lỗi nào xảy ra trong Transaction
             DB::rollBack();
 
-            // (Nâng cao) Tại đây bạn nên xóa các file ảnh đã upload dở vào storage
-            // để tránh rác file nếu bạn muốn làm chặt chẽ hơn.
-
             return redirect()->back()->with('error', 'Có lỗi xảy ra trong quá trình thêm sản phẩm. Vui lòng thử lại!')->withInput();
         }
     }
@@ -147,7 +144,7 @@ class ProductController extends Controller
             // -> File ảnh trên ổ cứng vẫn an toàn tuyệt đối!
             DB::rollBack();
 
-            return redirect()->route('products.index')->with('error', 'Không thể xóa! Sản phẩm này đã phát sinh đơn hàng, bạn chỉ có thể ẩn nó đi.');
+            return redirect()->route('products.index')->with('error', 'Không thể xóa! Sản phẩm này đã phát sinh đơn hàng.');
         }
     }
     // 6. Xử lý lưu dữ liệu Cập nhật (Update)
@@ -166,17 +163,17 @@ class ProductController extends Controller
             // 2. Xử lý Ảnh (Nếu admin CÓ chọn upload ảnh mới)
             if ($request->hasFile('images')) {
 
-                // A. Xóa sạch file ảnh cũ trong ổ cứng để dọn rác
-                foreach ($product->images as $oldImage) {
-                    $oldPath = $oldImage->getRawOriginal('image_path');
-                    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldPath)) {
-                        \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPath);
-                    }
-                }
+                // Xóa sạch file ảnh cũ trong ổ cứng để dọn rác
+//                foreach ($product->images as $oldImage) {
+//                    $oldPath = $oldImage->getRawOriginal('image_path');
+//                    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($oldPath)) {
+//                        \Illuminate\Support\Facades\Storage::disk('public')->delete($oldPath);
+//                    }
+//                }
                 // Xóa dữ liệu ảnh cũ trong Database
                 $product->images()->delete();
 
-                // B. Lưu bộ ảnh mới vào
+                // Lưu bộ ảnh mới vào
                 $images = $request->file('images');
                 $primaryIndex = (int)$request->primary_image_index;
 

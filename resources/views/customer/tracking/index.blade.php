@@ -13,10 +13,6 @@
                             <p class="text-muted">Kiểm tra tình trạng đơn hàng KeySpace của bạn</p>
                         </div>
 
-                        @if(session('error'))
-                            <div class="alert alert-danger">{{ session('error') }}</div>
-                        @endif
-
                         <form action="{{ route('tracking.track') }}" method="POST">
                             @csrf
                             <div class="row g-3">

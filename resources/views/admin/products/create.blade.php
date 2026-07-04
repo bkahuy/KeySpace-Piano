@@ -21,7 +21,7 @@
             @endif
 
             {{-- BẮT ĐẦU FORM (Lưu ý: Phần upload ảnh bắt buộc phải có thuộc tính: enctype="multipart/form-data") --}}
-            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data" novalidate id="checkout-form">
                 @csrf
 
                 <div class="row">
@@ -32,10 +32,12 @@
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span></label>
                                 <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Ví dụ: Yamaha U3H" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Mã SKU <span class="text-danger">*</span></label>
                                 <input type="text" name="sku" class="form-control" value="{{ old('sku') }}" placeholder="Ví dụ: YAM-U3H-001" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
 
@@ -50,6 +52,7 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Thương hiệu <span class="text-danger">*</span></label>
@@ -61,6 +64,7 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
 
@@ -68,14 +72,16 @@
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Giá bán gốc (VNĐ) <span class="text-danger">*</span></label>
                                 <input type="number" name="price" class="form-control" value="{{ old('price') }}" required min="0">
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Giá khuyến mãi (VNĐ)</label>
-                                <input type="number" name="sale_price" class="form-control" value="{{ old('sale_price') }}" min="0">
-                            </div>
+{{--                            <div class="col-md-4">--}}
+{{--                                <label class="form-label fw-bold">Giá khuyến mãi (VNĐ)</label>--}}
+{{--                                <input type="number" name="sale_price" class="form-control" value="{{ old('sale_price') }}" min="0">--}}
+{{--                            </div>--}}
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Tồn kho <span class="text-danger">*</span></label>
                                 <input type="number" name="stock_quantity" class="form-control" value="{{ old('stock_quantity') }}" required min="0">
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
 
@@ -86,6 +92,7 @@
                                     <option value="new" {{ old('condition') == 'new' ? 'selected' : '' }}>Mới (New)</option>
                                     <option value="used" {{ old('condition') == 'used' ? 'selected' : '' }}>Cũ (Used)</option>
                                 </select>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Màu sắc</label>
@@ -94,17 +101,19 @@
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Bảo hành (Tháng) <span class="text-danger">*</span></label>
                                 <input type="number" name="warranty_period" class="form-control" value="{{ old('warranty_period') }}" required min="0">
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mô tả ngắn <span class="text-danger">*</span></label>
                             <textarea name="short_description" class="form-control" rows="3" required>{{ old('short_description') }}</textarea>
+                            <div class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mô tả chi tiết</label>
-                            {{-- (Mẹo: Bạn nên tích hợp CKEditor/TinyMCE vào thẻ textarea này để Admin nhập mô tả định dạng đẹp) --}}
+                            {{--  tích hợp CKEditor/TinyMCE vào thẻ textarea này để Admin nhập mô tả định dạng đẹp) --}}
                             <textarea name="detailed_description" class="form-control" rows="8">{{ old('detailed_description') }}</textarea>
                         </div>
 
@@ -129,7 +138,7 @@
                                         <p class="mt-2 mb-0">Ảnh xem trước sẽ hiện ở đây</p>
                                     </div>
                                 </div>
-
+                                <div class="invalid-feedback"></div>
                                 {{-- Input ẩn để lưu chỉ số của ảnh chính --}}
                                 {{-- Giá trị mặc định là 0 (ảnh đầu tiên)</dd --}}
                                 <input type="hidden" name="primary_image_index" id="primaryImageIndex" value="0">

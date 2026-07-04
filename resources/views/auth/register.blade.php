@@ -55,7 +55,7 @@
                     type="password"
                     name="password"
                     class="form-control @error('password') is-invalid @enderror"
-                    placeholder="Tối thiểu 8 ký tự"
+                    placeholder="Tối thiểu 6 ký tự"
                     required
                 >
 

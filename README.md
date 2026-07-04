@@ -205,9 +205,9 @@ Mở file `.env` và cập nhật thông tin database:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=keyspace_db
-DB_USERNAME=root
-DB_PASSWORD=
+DB_DATABASE=keyspace_db (tên database bạn đã tạo)
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
 ```
 
 ### 5. Cấu hình Mail (Optional)
@@ -250,13 +250,8 @@ php artisan migrate:fresh --seed
 php artisan storage:link
 ```
 
-### 9. Build assets
 
-```bash
-npm run build
-```
-
-### 10. Chạy ứng dụng
+### 9. Chạy ứng dụng
 
 ```bash
 # Development server

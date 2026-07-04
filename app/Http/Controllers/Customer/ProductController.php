@@ -102,12 +102,6 @@ class ProductController extends Controller
             'comment.required' => 'Vui lòng nhập nội dung đánh giá.',
         ]);
 
-        // Kiểm tra xem user này đã đánh giá sản phẩm này chưa (Mỗi người chỉ đánh giá 1 lần/sản phẩm)
-//        $existingReview = Review::where('user_id', auth()->id())->where('product_id', $id)->first();
-//        if ($existingReview) {
-//            return redirect()->back()->with('error', 'Bạn đã đánh giá sản phẩm này rồi!');
-//        }
-
         Review::create([
             'user_id' => auth()->id(),
             'product_id' => $id,

@@ -45,10 +45,10 @@
                     </div>
                 </div>
 
-                {{-- THÊM NÚT HỦY ĐƠN VÀ POPUP VÀO ĐÂY --}}
+
                 @if($order->status == 'pending')
                     <div class="mb-4">
-                        {{-- 1. Nút bấm mở Popup (Thay vì submit form ngay) --}}
+                        {{-- 1. Nút bấm mở Popup --}}
                         <button type="button" class="btn btn-outline-danger w-100 fw-bold py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                             <i class="fa-solid fa-xmark me-2"></i> HỦY ĐƠN HÀNG NÀY
                         </button>
@@ -141,13 +141,13 @@
                                         <td class="ps-4 py-3">
                                             @php
                                                 // Lấy ảnh chính của sản phẩm
-                                                $primaryImage = $item->product->images->where('is_primary', true)->first();
-                                                $imagePath = $primaryImage ? asset($primaryImage->image_path) : asset('frontend/images/no-image.jpg');
+                                                $primaryImage = $item->path_img;
+                                                $imagePath = $primaryImage ? asset($item->path_img) : asset('frontend/images/no-image.jpg');
                                             @endphp
-                                            <img src="{{ $imagePath }}" alt="{{ $item->product->name }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+                                            <img src="{{ $imagePath }}" alt="{{ $item->product_name }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
                                         </td>
                                         <td>
-                                            <div class="fw-bold text-dark">{{ $item->product->name }}</div>
+                                            <div class="fw-bold text-dark">{{ $item->product_name }}</div>
                                             <small class="text-muted">SKU: {{ $item->product->sku }}</small>
                                         </td>
                                         <td class="text-center">{{ number_format($item->unit_price, 0, ',', '.') }}đ</td>

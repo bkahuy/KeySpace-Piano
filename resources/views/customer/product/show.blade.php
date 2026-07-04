@@ -75,7 +75,8 @@
 
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <label for="quantity" class="fw-bold">Số lượng:</label>
-                        <input type="number" name="quantity" id="quantity" class="form-control text-center" value="1" min="1" max="{{ $product->stock_quantity }}" style="width: 80px;">
+                        <input type="number" name="quantity" id="quantity" class="form-control text-center" value="1" min="1" max="{{ $product->stock_quantity }}" style="width: 80px;" data-max-stock="{{ $product->stock_quantity }}">
+                        <small id="stockWarning" class="text-danger" style="display: none;"></small>
                     </div>
 
                     <div class="d-flex gap-2">
@@ -195,5 +196,47 @@
         function changeImage(src) {
             document.getElementById('mainImage').src = src;
         }
+
+        // Kiểm tra số lượng khi thay đổi
+        document.getElementById('quantity').addEventListener('input', function() {
+            const maxStock = parseInt(this.getAttribute('data-max-stock'));
+            const currentValue = parseInt(this.value);
+            const warning = document.getElementById('stockWarning');
+            const buyButtons = document.querySelectorAll('button[type="submit"]');
+
+            if (currentValue > maxStock) {
+                warning.textContent = `Số lượng vượt quá tồn kho (${maxStock})`;
+                warning.style.display = 'block';
+                this.value = maxStock;
+
+                // Vô hiệu hóa nút mua
+                buyButtons.forEach(btn => btn.disabled = true);
+            } else if (currentValue < 1) {
+                warning.textContent = 'Số lượng phải lớn hơn 0';
+                warning.style.display = 'block';
+                this.value = 1;
+
+                buyButtons.forEach(btn => btn.disabled = true);
+            } else {
+                warning.style.display = 'none';
+
+                // Bật lại nút mua nếu còn hàng
+                if (maxStock > 0) {
+                    buyButtons.forEach(btn => btn.disabled = false);
+                }
+            }
+        });
+
+        // Kiểm tra khi submit form
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const maxStock = parseInt(document.getElementById('quantity').getAttribute('data-max-stock'));
+
+            if (quantity > maxStock) {
+                e.preventDefault();
+                alert(`Số lượng không được vượt quá tồn kho (${maxStock} sản phẩm)`);
+                return false;
+            }
+        });
     </script>
 @endpush

@@ -119,4 +119,32 @@ class PromotionController extends Controller
             );
         }
     }
+
+    public static function assignPromotionCouponsToNewUser(User $user): void
+    {
+        $promotions = Promotion::where('is_active', true)
+            ->where(function ($query) {
+                $query->whereNull('starts_at')
+                    ->orWhereDate('starts_at', '<=', now());
+            })
+            ->where(function ($query) {
+                $query->whereNull('ends_at')
+                    ->orWhereDate('ends_at', '>=', now());
+            })
+            ->get();
+
+        foreach ($promotions as $promotion) {
+            UserCoupon::firstOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'promotion_id' => $promotion->id,
+                ],
+                [
+                    'code' => $promotion->code_prefix
+                        . '-' . $user->id
+                        . '-' . strtoupper(Str::random(5)),
+                ]
+            );
+        }
+    }
 }

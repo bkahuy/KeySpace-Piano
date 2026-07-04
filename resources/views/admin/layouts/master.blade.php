@@ -34,6 +34,116 @@
             margin-left: 250px;
             width: calc(100% - 250px);
         }
+        :root {
+            --admin-sidebar-width: 250px;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: var(--admin-sidebar-width);
+            transition: transform 0.25s ease;
+        }
+
+        .content {
+            margin-left: var(--admin-sidebar-width);
+            width: calc(100% - var(--admin-sidebar-width));
+            min-width: 0;
+        }
+
+        .admin-sidebar-toggle,
+        .admin-sidebar-backdrop {
+            display: none;
+        }
+
+        @media (max-width: 991.98px) {
+            body {
+                display: block !important;
+            }
+
+            .sidebar {
+                width: min(var(--admin-sidebar-width), 86vw);
+                transform: translateX(-100%);
+            }
+
+            body.admin-sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .admin-sidebar-backdrop {
+                position: fixed;
+                inset: 0;
+                display: block;
+                background: rgba(0, 0, 0, 0.45);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s ease;
+                z-index: 1030;
+            }
+
+            body.admin-sidebar-open .admin-sidebar-backdrop {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .admin-sidebar-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                flex: 0 0 auto;
+            }
+
+            .navbar .container-fluid {
+                gap: 0.75rem;
+            }
+
+            .navbar-brand {
+                flex: 1 1 180px;
+                white-space: normal;
+                line-height: 1.25;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .navbar {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .navbar .container-fluid {
+                align-items: flex-start !important;
+            }
+
+            .navbar .d-flex.align-items-center.gap-3 {
+                width: 100%;
+                justify-content: space-between;
+                align-items: flex-start !important;
+                gap: 0.75rem !important;
+                flex-wrap: wrap;
+            }
+
+            .container-fluid.px-4 {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .card-body {
+                min-width: 0;
+            }
+
+            .card-body h3 {
+                overflow-wrap: anywhere;
+            }
+        }
     </style>
 </head>
 <body class="d-flex">
@@ -79,10 +189,14 @@
 </div>
 
 {{-- CỘT PHẢI: NỘI DUNG CHÍNH --}}
+<button type="button" class="admin-sidebar-backdrop border-0 p-0" aria-label="Close menu"></button>
 <div class="content">
     {{-- Thanh Topbar --}}
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 px-4 py-3">
         <div class="container-fluid">
+            <button type="button" class="admin-sidebar-toggle btn btn-outline-secondary d-lg-none" aria-label="Open menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <span class="navbar-brand mb-0 h1">@yield('title')</span>
 
             <div class="d-flex align-items-center gap-3">
@@ -146,6 +260,37 @@
             var toast2 = new bootstrap.Toast(errorElement);
             toast2.show();
         }
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var toggleButton = document.querySelector('.admin-sidebar-toggle');
+        var backdrop = document.querySelector('.admin-sidebar-backdrop');
+        var sidebarLinks = document.querySelectorAll('.sidebar a');
+
+        function closeSidebar() {
+            document.body.classList.remove('admin-sidebar-open');
+        }
+
+        if (toggleButton) {
+            toggleButton.addEventListener('click', function() {
+                document.body.classList.toggle('admin-sidebar-open');
+            });
+        }
+
+        if (backdrop) {
+            backdrop.addEventListener('click', closeSidebar);
+        }
+
+        sidebarLinks.forEach(function(link) {
+            link.addEventListener('click', closeSidebar);
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 992) {
+                closeSidebar();
+            }
+        });
     });
 </script>
 </body>

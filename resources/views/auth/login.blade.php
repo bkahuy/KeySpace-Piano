@@ -47,7 +47,6 @@
                     type="password"
                     name="password"
                     class="form-control @error('password') is-invalid @enderror"
-
                     placeholder="Nhập mật khẩu..."
                 >
 
